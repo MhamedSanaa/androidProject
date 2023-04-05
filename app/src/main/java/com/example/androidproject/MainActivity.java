@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
-    private static int SPLASH_SCREEN = 5000;
+    private static int SPLASH_SCREEN = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent loginIntent=new Intent(MainActivity.this, LoginActivity.class);
+                Intent loginIntent=new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(loginIntent);
                 finish();
             }
