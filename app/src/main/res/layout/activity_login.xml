@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -17,15 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        tools:ignore="MissingConstraints">
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="94dp"
@@ -33,48 +26,56 @@
         android:layout_marginTop="32dp"
         android:text="Login"
         android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        android:textStyle="bold"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:gravity="center">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="username"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="Password"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="20dp"
         android:background="#2196f3"
         android:text="Submit"
         android:textColor="@color/white"
-
         android:textSize="20sp"
         app:backgroundTint="@color/purple_700"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
         tools:ignore="MissingConstraints" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password"
-        android:layout_width="231dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:hint="Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
-        android:layout_width="234dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="52dp"
-        android:hint="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btn_signup"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#2196f3"
+        android:text="Signup"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:backgroundTint="@color/purple_700"
+        tools:ignore="MissingConstraints" />
+</LinearLayout>
