@@ -13,20 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.Path;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.regex.Pattern;
 
@@ -84,28 +75,6 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(SignupActivity.this, "Confirm password please", Toast.LENGTH_LONG).show();
         }
     }
-    /*public void isUserExists(){
-        db.collection("users")
-                .whereEqualTo("username",susername)
-                .whereEqualTo("password",spassword)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot querySnapshot = task.getResult();
-                        Log.d("TAG", "onClick: ");
-                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                            Log.d("TAG", "onClick: ");
-                            Intent loginIntent=new Intent(SignupActivity.this, DashboardActivity.class);
-                            startActivity(loginIntent);
-                            finish();
-                        } else {
-                            Toast.makeText(SignupActivity.this, "there is no user with these credentials", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Toast.makeText(SignupActivity.this, "No Result", Toast.LENGTH_LONG).show();
-                    }
-                });
-    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
