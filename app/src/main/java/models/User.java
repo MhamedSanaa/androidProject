@@ -2,6 +2,7 @@ package models;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class User {
@@ -18,5 +19,9 @@ public class User {
         this.email = email;
         this.fullName = fullName;
         this.password = password;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, email,fullName,password);
     }
 }
