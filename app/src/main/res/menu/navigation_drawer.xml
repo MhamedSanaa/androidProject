@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:checkableBehavior="single">
     <item
-        android:id="@+id/main_item"
-        android:title="test">
-        <menu>
-            <item
-                android:id="@+id/inbox_item"
-                android:icon="@drawable/logout_icon"
-                android:title="title logout"
-                android:checkable="true"/>
-            <item
-                android:id="@+id/inbox_item2"
-                android:icon="@drawable/logout_icon"
-                android:title="title logout"
-                android:checkable="true"/>
-            <item
-                android:id="@+id/inbox_item3"
-                android:icon="@drawable/logout_icon"
-                android:title="title logout"
-                android:checkable="true"/>
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/home_icon"/>
 
-        </menu>
-    </item>
-</menu>
+    <item
+        android:id="@+id/account"
+        android:title="Account"
+        android:icon="@drawable/account_circle_icon"/>
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/logout_icon"/>
+
+
+
+</group>
+
+    </menu>

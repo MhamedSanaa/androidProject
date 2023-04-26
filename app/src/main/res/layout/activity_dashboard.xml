@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    tools:context=".DashboardActivity"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DashboardActivity">
+    android:layout_height="match_parent">
 
 
-    <com.google.android.material.navigation.NavigationView
-
+<TextView
+    android:id="@+id/textView"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-        app:menu="@menu/navigation_drawer"
-    android:layout_gravity="center" />
-    <!-- The main content view -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_content"
+    android:layout_height="wrap_content"
+    android:text="welcome to the dashboard"
+    android:textSize="20sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.drawerlayout.widget.DrawerLayout
+
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
 
             <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bluebutton">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bluebutton">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/topAppBar"
@@ -40,33 +48,20 @@
                     app:title="Home"
                     app:titleTextColor="#FFFFFF" />
 
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <!-- Note: A RecyclerView can also be used -->
-<!--            <androidx.core.widget.NestedScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-<!--                &lt;!&ndash; Scrollable content &ndash;&gt;-->
-
-<!--            </androidx.core.widget.NestedScrollView>-->
+        </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <TextView
-            android:id="@+id/textView2"
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/naview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="welcome to the dashboard"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/navigation_drawer_header"
+            app:menu="@menu/navigation_drawer"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-"
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
