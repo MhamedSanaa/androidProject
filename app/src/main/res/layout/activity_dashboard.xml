@@ -8,6 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+
+    <com.google.android.material.navigation.NavigationView
+
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+        app:menu="@menu/navigation_drawer"
+    android:layout_gravity="center" />
     <!-- The main content view -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_content"
@@ -36,14 +43,14 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <!-- Note: A RecyclerView can also be used -->
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<!--            <androidx.core.widget.NestedScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
-                <!-- Scrollable content -->
+<!--                &lt;!&ndash; Scrollable content &ndash;&gt;-->
 
-            </androidx.core.widget.NestedScrollView>
+<!--            </androidx.core.widget.NestedScrollView>-->
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -59,41 +66,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+"
 
-    <!-- The navigation drawer -->
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/navigation_drawer"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        app:headerLayout="@layout/navigation_drawer_header"-->
-<!--        app:menu="@menu/navigation_drawer" />-->
-    <androidx.drawerlayout.widget.DrawerLayout
-
-    android:id="@+id/drawerLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:openDrawer="start">
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <!-- Screen content -->
-        <!-- Use app:layout_behavior="@string/appbar_scrolling_view_behavior" to fit below top app bar -->
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_drawer"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    app:menu="@menu/navigation_drawer"
-
-    />
-
-</androidx.drawerlayout.widget.DrawerLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
