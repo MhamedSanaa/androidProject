@@ -10,5 +10,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="navigation_drawer_open">open navigation drawer</string>
     <string name="navigation_drawer_close">close navigation drawer</string>
+    <string name="api_key">AIzaSyDe5gy4VswCmXB0x6_yBZFVxSU-abeDAyM</string>
 
-    </resources>
+</resources>
