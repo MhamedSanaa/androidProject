@@ -1,125 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DashboardActivity"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="welcome to the dashboard"
-    android:textSize="20sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_marginTop="80dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!-- Main content -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Media -->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    app:srcCompat="@drawable/w2"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="description"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Computer Science"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="By : Hamda"
-                        android:textSize="20sp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="At Manouba, ISAMM"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="14sp"
-                        android:textStyle="italic" />
-
-                </LinearLayout>
-
-                <!-- Buttons -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        style="?attr/borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:backgroundTint="@color/bluebutton"
-                        android:text="Join"
-                        android:textColor="#F3EBEB"
-                        android:textStyle="bold" />
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Delete"
-                        style="?attr/borderlessButtonStyle"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:contentDescription="Add new post"
-            app:backgroundTint="#8A9AED"
-            app:srcCompat="@drawable/create_icon" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-                <!--out of containt-->
+    android:layout_height="match_parent"
+    tools:context=".DashboardActivity">
+    <!--out of containt-->
     <androidx.drawerlayout.widget.DrawerLayout
 
         android:id="@+id/drawerLayout"
@@ -132,11 +19,122 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
+            <!-- Main content -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <!--this a card view -->
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/card"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="8dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    &lt;!&ndash; Media &ndash;&gt;-->
+<!--                    &lt;!&ndash;                <ImageView&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    android:layout_height="194dp"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    android:contentDescription="description"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    android:scaleType="centerCrop"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    app:srcCompat="@drawable/w2" />&ndash;&gt;-->
+<!--                    <FrameLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="150dp"-->
+<!--                        android:id="@+id/map_frame"/>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="16dp">-->
+
+<!--                        &lt;!&ndash; Title, secondary and supporting text &ndash;&gt;-->
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Computer Science"-->
+<!--                            android:textAppearance="?attr/textAppearanceTitleMedium"-->
+<!--                            android:textSize="24sp"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:text="By : Hamda"-->
+<!--                            android:textAppearance="?attr/textAppearanceBodyMedium"-->
+<!--                            android:textColor="?android:attr/textColorSecondary"-->
+<!--                            android:textSize="20sp" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="16dp"-->
+<!--                            android:text="At Manouba, ISAMM"-->
+<!--                            android:textAppearance="?attr/textAppearanceBodyMedium"-->
+<!--                            android:textColor="?android:attr/textColorSecondary"-->
+<!--                            android:textSize="14sp"-->
+<!--                            android:textStyle="italic" />-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    &lt;!&ndash; Buttons &ndash;&gt;-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="8dp"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                        <com.google.android.material.button.MaterialButton-->
+<!--                            style="?attr/borderlessButtonStyle"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginEnd="8dp"-->
+<!--                            android:backgroundTint="@color/bluebutton"-->
+<!--                            android:text="Join"-->
+<!--                            android:textColor="#F3EBEB"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <com.google.android.material.button.MaterialButton-->
+<!--                            style="?attr/borderlessButtonStyle"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Delete" />-->
+<!--                        <Button-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:text="hhhhhhhhhhhhh"/>-->
+<!--                    </LinearLayout>-->
+
+<!--                </LinearLayout>-->
+
+<!--            </com.google.android.material.card.MaterialCardView>-->
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:contentDescription="Add new post"
+                app:backgroundTint="#8A9AED"
+                app:srcCompat="@drawable/create_icon" />
 
             <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bluebutton">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bluebutton">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/topAppBar"
@@ -148,23 +146,21 @@
                     app:title="Home"
                     app:titleTextColor="#FFFFFF" />
 
-        </com.google.android.material.appbar.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-<!--        ALERT : REMOVE THE COMMEMNT BELLOW-->
+        <!--        ALERT : REMOVE THE COMMEMNT BELLOW-->
 
 
-
-<!--        <com.google.android.material.navigation.NavigationView-->
-<!--            android:id="@+id/naview"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="start"-->
-<!--            app:headerLayout="@layout/navigation_drawer_header"-->
-<!--            app:menu="@menu/navigation_drawer"-->
-<!--            />-->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/naview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/navigation_drawer_header"
+            app:menu="@menu/navigation_drawer" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
