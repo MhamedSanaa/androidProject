@@ -3,16 +3,22 @@ package com.example.androidproject;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +27,13 @@ import javax.annotation.Nullable;
 
 import adapter.PostAdapter;
 import models.Post;
+import models.User;
 
 public class PostsListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
-    private List<Post> posts = new ArrayList<>();;
+    private List<Post> posts = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -48,16 +55,31 @@ public class PostsListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        posts.add(new Post("6s5df46sd65f","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/10/2023","12:00","adresse","John Doe"));
-        posts.add(new Post("9sd8g89ggnjk","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/10/2023","12:00","adresse","John Doe"));
-        posts.add(new Post("sd6f54s6d5f4","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/10/2023","12:00","adresse","John Doe"));
-
 
         // Set adapter
-        postAdapter = new PostAdapter(posts);
+        postAdapter = new PostAdapter(getContext(),posts);
         recyclerView.setAdapter(postAdapter);
-
+        getPosts();
         // Inflate the layout for this fragment
         return view;
+    }
+    public void getPosts(){
+        db.collection("posts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Post post = document.toObject(Post.class);
+                                posts.add(post);
+                                Log.d("posts list fragement////////////////", document.getId() + " => " + document.getData());
+                            }
+                            postAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("TAG", "Error getting documents: /////////////////////", task.getException());
+                        }
+                    }
+                });
     }
 }

@@ -1,5 +1,6 @@
 package adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,10 @@ import models.Post;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder>{
 
     private List<Post> posts;
+    private Context context;
 
-    public PostAdapter(List<Post> posts) {
+    public PostAdapter(Context context, List<Post> posts) {
+        this.context = context;
         this.posts = posts;
     }
     @NonNull
@@ -40,7 +43,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
         Post post = posts.get(position);
-
+        Log.d( "onBindViewHolder: ---------------",post.UserId);
         holder.userIdTextView.setText(post.UserId);
         holder.addressTextView.setText(post.address);
         holder.userTextView.setText(post.user);
@@ -60,7 +63,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public int getItemCount() {
-
         return posts.size();
     }
     public static class PostViewHolder extends RecyclerView.ViewHolder {

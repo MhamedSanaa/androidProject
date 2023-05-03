@@ -153,7 +153,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 //                                Log.d(TAG, "DocumentSnapshot data: " + document.getString("fullName") );
-                                Post newPost = new Post(userId, subjectName, locationName, date, time, location, document.getString("fullName") );
+                                Post newPost = new Post(userId, subjectName, locationName, date, time, location,0, document.getString("fullName") );
                                 db.collection("posts")
                                         .add(newPost)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
