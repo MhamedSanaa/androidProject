@@ -125,13 +125,13 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void getViewIds(){
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        fullname = findViewById(R.id.fullname);
-        confirmpassword = findViewById(R.id.confirmpassword);
-        username = findViewById(R.id.username);
-        buttonreg = findViewById(R.id.btn_register);
-        accountExist = findViewById(R.id.accountExist);
+        email = findViewById(R.id.signup_email);
+        password = findViewById(R.id.signup_password);
+        fullname = findViewById(R.id.signup_fullname);
+        confirmpassword = findViewById(R.id.signup_confirmpassword);
+        username = findViewById(R.id.signup_username);
+        buttonreg = findViewById(R.id.signup_btn_register);
+        accountExist = findViewById(R.id.signup_accountExist);
     }
     public boolean isValidEmail(String email){
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";

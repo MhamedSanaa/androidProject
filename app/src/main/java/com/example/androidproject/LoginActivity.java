@@ -29,10 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     public void getViewIds() {
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        btn_signup = findViewById(R.id.btn_signup);
-        btn_login = findViewById(R.id.btn_login);
+        email = findViewById(R.id.login_email);
+        password = findViewById(R.id.login_password);
+        btn_signup = findViewById(R.id.login_btn_signup);
+        btn_login = findViewById(R.id.login_btn_login);
     }
 
     @Override
