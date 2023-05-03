@@ -1,7 +1,9 @@
 package com.example.androidproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -33,11 +36,25 @@ public class DashboardActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private List<Post> posts;
-
+    FloatingActionButton createBTN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        createBTN = findViewById(R.id.floating_create_button);
+
+        createBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DashboardActivity.this, FormActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.naview);
         toolbar = findViewById(R.id.topAppBar);

@@ -28,6 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="55dp"
                 app:layout_constraintEnd_toEndOf="parent"/>
             <!--this a card view -->
 <!--            <com.google.android.material.card.MaterialCardView-->
@@ -122,7 +123,7 @@
 <!--            </com.google.android.material.card.MaterialCardView>-->
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floating_action_button"
+                android:id="@+id/floating_create_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -130,6 +131,7 @@
                 android:contentDescription="Add new post"
                 app:backgroundTint="#8A9AED"
                 app:srcCompat="@drawable/create_icon" />
+
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"

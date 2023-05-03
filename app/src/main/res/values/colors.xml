@@ -11,4 +11,6 @@
     <color name="primary">#FF626262</color>
     <color name="secondary">#FFf2d138</color>
     <color name="test">#FF258964</color>
+    <color name="transparent">#00FFFFFF</color>
+
 </resources>
