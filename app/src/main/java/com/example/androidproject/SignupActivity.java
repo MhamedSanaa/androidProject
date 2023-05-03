@@ -28,53 +28,7 @@ public class SignupActivity extends AppCompatActivity {
     User newUser;
     TextInputEditText email, password, fullname, confirmpassword, username;
     Button buttonreg, accountExist;
-    public void getViewIds(){
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        fullname = findViewById(R.id.fullname);
-        confirmpassword = findViewById(R.id.confirmpassword);
-        username = findViewById(R.id.username);
-        buttonreg = findViewById(R.id.btn_register);
-        accountExist = findViewById(R.id.accountExist);
-    }
-    public boolean isValidEmail(String email){
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        return Pattern.matches(emailRegex, email);
-    }
-    public boolean isValidPwd(String password){
-        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,30}$";
-        return Pattern.matches(passwordRegex, password);
-    }
-    public boolean isValidUsername(String username) {
-        String usernameRegex = "^[a-zA-Z0-9_-]{3,20}$";
-        return Pattern.matches(usernameRegex, username);
-    }
-    public boolean isPasswordMatch(String password, String confirmPassword) {
-        return confirmPassword.equals(password);
-    }
 
-    public void areFieldsEmpty(String semail,String susername,String spassword,String sconfirmpassword){
-        if (TextUtils.isEmpty(semail)) {
-            email.setError("This field is required");
-            email.requestFocus();
-            Toast.makeText(SignupActivity.this, "email required", Toast.LENGTH_LONG).show();
-        }
-        if (TextUtils.isEmpty(susername)) {
-            username.setError("This field is required");
-            username.requestFocus();
-            Toast.makeText(SignupActivity.this, "Enter username", Toast.LENGTH_LONG).show();
-        }
-        if (TextUtils.isEmpty(spassword)) {
-            password.setError("This field is required");
-            password.requestFocus();
-            Toast.makeText(SignupActivity.this, "Enter password", Toast.LENGTH_LONG).show();
-        }
-        if (TextUtils.isEmpty(sconfirmpassword)) {
-            confirmpassword.setError("This field is required");
-            confirmpassword.requestFocus();
-            Toast.makeText(SignupActivity.this, "Confirm password please", Toast.LENGTH_LONG).show();
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -144,5 +98,53 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void getViewIds(){
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        fullname = findViewById(R.id.fullname);
+        confirmpassword = findViewById(R.id.confirmpassword);
+        username = findViewById(R.id.username);
+        buttonreg = findViewById(R.id.btn_register);
+        accountExist = findViewById(R.id.accountExist);
+    }
+    public boolean isValidEmail(String email){
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(emailRegex, email);
+    }
+    public boolean isValidPwd(String password){
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,30}$";
+        return Pattern.matches(passwordRegex, password);
+    }
+    public boolean isValidUsername(String username) {
+        String usernameRegex = "^[a-zA-Z0-9_-]{3,20}$";
+        return Pattern.matches(usernameRegex, username);
+    }
+    public boolean isPasswordMatch(String password, String confirmPassword) {
+        return confirmPassword.equals(password);
+    }
+
+    public void areFieldsEmpty(String semail,String susername,String spassword,String sconfirmpassword){
+        if (TextUtils.isEmpty(semail)) {
+            email.setError("This field is required");
+            email.requestFocus();
+            Toast.makeText(SignupActivity.this, "email required", Toast.LENGTH_LONG).show();
+        }
+        if (TextUtils.isEmpty(susername)) {
+            username.setError("This field is required");
+            username.requestFocus();
+            Toast.makeText(SignupActivity.this, "Enter username", Toast.LENGTH_LONG).show();
+        }
+        if (TextUtils.isEmpty(spassword)) {
+            password.setError("This field is required");
+            password.requestFocus();
+            Toast.makeText(SignupActivity.this, "Enter password", Toast.LENGTH_LONG).show();
+        }
+        if (TextUtils.isEmpty(sconfirmpassword)) {
+            confirmpassword.setError("This field is required");
+            confirmpassword.requestFocus();
+            Toast.makeText(SignupActivity.this, "Confirm password please", Toast.LENGTH_LONG).show();
+        }
     }
 }
