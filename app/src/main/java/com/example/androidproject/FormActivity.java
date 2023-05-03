@@ -142,7 +142,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String locationName = String.valueOf(locationNameI.getEditText().getText());
                 String date = String.valueOf(show_selected_date.getText());
                 String time = String.valueOf(show_time_date.getText());
-                String location = mLatLng.toString();
+                LatLng location = mLatLng;
                 String userId = mAuth.getCurrentUser().getUid();
 
 
@@ -153,7 +153,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 //                                Log.d(TAG, "DocumentSnapshot data: " + document.getString("fullName") );
-                                Post newPost = new Post(userId, subjectName, locationName, date, time, location,0, document.getString("fullName") );
+                                Post newPost = new Post(userId, subjectName, locationName, date, time, location.latitude,location.longitude,0, document.getString("fullName") );
                                 db.collection("posts")
                                         .add(newPost)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

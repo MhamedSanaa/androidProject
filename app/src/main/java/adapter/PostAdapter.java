@@ -53,7 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 // Set the address location on the map
-                LatLng addressLocation = new LatLng(37.4220, -122.0841);
+                LatLng addressLocation = new LatLng(post.latitude, post.longitude);
                 googleMap.addMarker(new MarkerOptions().position(addressLocation).title("Marker"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(addressLocation, 15));
                 Log.d("lets see if other maps work-------------------------", googleMap.getCameraPosition().target.toString());
