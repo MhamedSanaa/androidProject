@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -162,6 +163,9 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
                                                 //Navigate to home page
+                                                Intent loginIntent = new Intent(FormActivity.this, DashboardActivity.class);
+                                                startActivity(loginIntent);
+                                                finish();
 
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
