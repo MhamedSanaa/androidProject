@@ -1,5 +1,7 @@
 package com.example.androidproject;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,22 +23,32 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FormActivity extends AppCompatActivity implements OnMapReadyCallback {
+import models.Post;
 
+public class FormActivity extends AppCompatActivity implements OnMapReadyCallback {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button calendarButton;
     Button timeButton;
     Button form_submit;
     TextView textViewToChange;
-    TextView show_time_date;
+    TextView show_selected_date, show_time_date;
+    TextInputLayout subjectNameI, locationNameI;
+
 
     private GoogleMap mMap;
     private Marker mMarker;
@@ -48,6 +60,8 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.post_map);
         mapFragment.getMapAsync(this);
 
@@ -58,13 +72,14 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         calendarButton = findViewById(R.id.pick_date_button);
         timeButton = findViewById(R.id.pick_time_button);
         form_submit=findViewById(R.id.form_submit);
+
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
                         .setTimeFormat(TimeFormat.CLOCK_12H)
-                        .setHour(00)
-                        .setMinute(00)
+                        .setHour(0)
+                        .setMinute(0)
                         .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
                         .setTitleText("Select Appointment time")
                         .build();
@@ -114,8 +129,32 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         form_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w("TAG++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", mLatLng.toString());
-                Log.w("TAG++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", "mLatLng.toString())");
+                subjectNameI =(TextInputLayout) findViewById(R.id.sn);
+                locationNameI =(TextInputLayout) findViewById(R.id.ln);
+                show_selected_date = (TextView) findViewById(R.id.show_selected_date);
+                show_time_date =(TextView) findViewById(R.id.show_time_date);
+                String subjectName=String.valueOf(subjectNameI.getEditText().getText());
+                String locationName=String.valueOf(locationNameI.getEditText().getText());
+                String date=String.valueOf(show_selected_date.getText());
+                String time=String.valueOf(show_time_date.getText());
+                String location=mLatLng.toString();
+                Post newPost=new Post("156156165",subjectName,locationName,date,time,location,"default user");
+                db.collection("posts")
+                        .add(newPost)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                                //Navigate to home page
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
             }
         });
 
@@ -171,7 +210,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 // Save the marker coordinates in a variable
                 mLatLng = latLng;
-                Log.w("TAG++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", mLatLng.toString());
+
             }
         });
     }

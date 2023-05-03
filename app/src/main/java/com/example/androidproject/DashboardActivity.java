@@ -64,9 +64,9 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
 
         posts = new ArrayList<>();
-        posts.add(new Post("6s5df46sd65f","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","John Doe"));
-        posts.add(new Post("sd6f54s6d5f4","science", "1 Infinite Loop, Cupertino, CA 95014","Jane Smith"));
-        posts.add(new Post("9sd8g89ggnjk","engeneering", "350 Rhode Island St, San Francisco, CA 94103","Bob Johnson"));
+        posts.add(new Post("6s5df46sd65f","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/02/2022","10:00","jiodsa joidas","John Doe"));
+        posts.add(new Post("sd6f54s6d5f4","science", "1 Infinite Loop, Cupertino, CA 95014","22/05/2022","19:30","jiodsa joidas","Jane Smith"));
+        posts.add(new Post("9sd8g89ggnjk","engeneering", "350 Rhode Island St, San Francisco, CA 94103","23/01/2024","07:05","jiodsa joidas","Bob Johnson"));
 
 
         recyclerView = findViewById(R.id.recycler_view);
