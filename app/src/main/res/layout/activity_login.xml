@@ -73,4 +73,13 @@
         android:layout_margin="5dp"
         android:text="Sign up"
         android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Forget password ?"
+        android:textAlignment="center"
+        android:textColor="#0096FF"
+        android:textColorHint="#B16767" />
 </LinearLayout>
