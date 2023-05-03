@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class DashboardActivity extends AppCompatActivity {
         logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
                 SessionManagement sessionManagement = new SessionManagement(DashboardActivity.this);
                 Log.d( "onMenuItemClick: ",sessionManagement.getSession());
                 sessionManagement.removeSession();
