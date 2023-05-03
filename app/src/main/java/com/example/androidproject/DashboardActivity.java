@@ -1,13 +1,10 @@
 package com.example.androidproject;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,36 +19,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import adapter.PostAdapter;
-import models.Post;
-
 public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     MenuItem logout;
     Toolbar toolbar;
-//    private GoogleMap mMap;
-    FloatingActionButton floating_action_button;
-    private RecyclerView recyclerView;
-    private List<Post> posts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        floating_action_button=findViewById(R.id.floating_action_button);
-
-        floating_action_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DashboardActivity.this, FormActivity.class);
-                startActivity(intent);
-            }
-        });
 
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.naview);
@@ -80,41 +57,10 @@ public class DashboardActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        posts = new ArrayList<>();
-        posts.add(new Post("6s5df46sd65f","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/10/2023","12:00","adresse","John Doe"));
-        posts.add(new Post("9sd8g89ggnjk","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/10/2023","12:00","adresse","John Doe"));
-        posts.add(new Post("sd6f54s6d5f4","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/10/2023","12:00","adresse","John Doe"));
-
-
-        recyclerView = findViewById(R.id.recycler_view);
-
-        // Create a new LinearLayoutManager and set it on the RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        // Create a new adapter and set it on the RecyclerView
-        PostAdapter adapter = new PostAdapter(posts);
-        Log.d("is there an adapter--------------------------------", Integer.toString(adapter.getItemCount()));
-        recyclerView.setAdapter(adapter);
-        //FrameLayout mapFrame = findViewById(R.id.map_frame);
-
-        // Create a new instance of the Google Map fragment
-//        SupportMapFragment mapFragment = new SupportMapFragment();
-//
-//        getSupportFragmentManager().beginTransaction().add(mapFrame.getId(), mapFragment).commit();
-//        mapFragment.getMapAsync(new OnMapReadyCallback() {
-//            @Override
-//            public void onMapReady(GoogleMap googleMap) {
-//                mMap = googleMap;
-//
-//                // Customize the map as needed, e.g. add markers, polygons, etc.
-//                LatLng sydney = new LatLng(-34, 151);
-//                mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//            }
-//        });
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsListFragment()).commit();
+//            navigationView.setCheckedItem(R.id.nav_home);
+        }
     }
 
 
