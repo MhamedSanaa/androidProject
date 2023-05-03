@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,8 +33,8 @@ public class DashboardActivity extends AppCompatActivity {
     NavigationView navigationView;
     MenuItem logout;
     Toolbar toolbar;
-    private GoogleMap mMap;
-
+//    private GoogleMap mMap;
+    FloatingActionButton floating_action_button;
     private RecyclerView recyclerView;
     private List<Post> posts;
 
@@ -41,6 +42,17 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        floating_action_button=findViewById(R.id.floating_action_button);
+
+        floating_action_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DashboardActivity.this, FormActivity.class);
+                startActivity(intent);
+            }
+        });
+
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.naview);
         toolbar = findViewById(R.id.topAppBar);

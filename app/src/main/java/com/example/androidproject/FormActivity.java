@@ -23,8 +23,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,7 +34,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -49,10 +53,12 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView show_selected_date, show_time_date;
     TextInputLayout subjectNameI, locationNameI;
 
+    private FirebaseAuth mAuth;
+
 
     private GoogleMap mMap;
     private Marker mMarker;
-    LatLng mLatLng =new LatLng(0,0);
+    LatLng mLatLng = new LatLng(0, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +66,17 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-
+        mAuth = FirebaseAuth.getInstance();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.post_map);
         mapFragment.getMapAsync(this);
-
 
 
         textViewToChange = (TextView) findViewById(R.id.show_selected_date);
         textViewToChange.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         calendarButton = findViewById(R.id.pick_date_button);
         timeButton = findViewById(R.id.pick_time_button);
-        form_submit=findViewById(R.id.form_submit);
+        form_submit = findViewById(R.id.form_submit);
 
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,32 +134,53 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         form_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subjectNameI =(TextInputLayout) findViewById(R.id.sn);
-                locationNameI =(TextInputLayout) findViewById(R.id.ln);
+                subjectNameI = (TextInputLayout) findViewById(R.id.sn);
+                locationNameI = (TextInputLayout) findViewById(R.id.ln);
                 show_selected_date = (TextView) findViewById(R.id.show_selected_date);
-                show_time_date =(TextView) findViewById(R.id.show_time_date);
-                String subjectName=String.valueOf(subjectNameI.getEditText().getText());
-                String locationName=String.valueOf(locationNameI.getEditText().getText());
-                String date=String.valueOf(show_selected_date.getText());
-                String time=String.valueOf(show_time_date.getText());
-                String location=mLatLng.toString();
-                Post newPost=new Post("156156165",subjectName,locationName,date,time,location,"default user");
-                db.collection("posts")
-                        .add(newPost)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                show_time_date = (TextView) findViewById(R.id.show_time_date);
+                String subjectName = String.valueOf(subjectNameI.getEditText().getText());
+                String locationName = String.valueOf(locationNameI.getEditText().getText());
+                String date = String.valueOf(show_selected_date.getText());
+                String time = String.valueOf(show_time_date.getText());
+                String location = mLatLng.toString();
+                String userId = mAuth.getCurrentUser().getUid();
 
-                                //Navigate to home page
 
+                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+//                                Log.d(TAG, "DocumentSnapshot data: " + document.getString("fullName") );
+                                Post newPost = new Post(userId, subjectName, locationName, date, time, location, document.getString("fullName") );
+                                db.collection("posts")
+                                        .add(newPost)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                                                //Navigate to home page
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error adding document", e);
+                                            }
+                                        });
+                            } else {
+                                Log.d(TAG, "No such document");
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
+
             }
         });
 
@@ -191,7 +217,6 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
-
 
 
     @Override
