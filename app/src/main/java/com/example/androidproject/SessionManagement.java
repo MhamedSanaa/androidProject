@@ -26,4 +26,8 @@ public class SessionManagement {
     public String getSession(){
         return sharedPreferences.getString(SESSION_KEY, "NaN");
     }
+
+    public void removeSession(){
+        editor.putString(SESSION_KEY,"NaN").commit();
+    }
 }

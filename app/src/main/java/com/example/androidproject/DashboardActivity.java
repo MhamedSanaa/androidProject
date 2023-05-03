@@ -1,11 +1,15 @@
 package com.example.androidproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,13 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -31,42 +29,47 @@ import models.Post;
 public class DashboardActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    MenuItem logout;
     Toolbar toolbar;
     private GoogleMap mMap;
 
     private RecyclerView recyclerView;
     private List<Post> posts;
-    FloatingActionButton createBTN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        createBTN = findViewById(R.id.floating_create_button);
-
-        createBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DashboardActivity.this, FormActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
-
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.naview);
         toolbar = findViewById(R.id.topAppBar);
+
+        NavigationView navigationView = findViewById(R.id.naview);
+        Menu menu = navigationView.getMenu();
+        logout = menu.findItem(R.id.logout);
+
+        logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                SessionManagement sessionManagement = new SessionManagement(DashboardActivity.this);
+                Log.d( "onMenuItemClick: ",sessionManagement.getSession());
+                sessionManagement.removeSession();
+                Log.d( "onMenuItemClick: ",sessionManagement.getSession());
+                Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+                finish();
+                return true;
+            }
+        });
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         posts = new ArrayList<>();
-        posts.add(new Post("6s5df46sd65f","math", "1600 Amphitheatre Parkway, Mountain View, CA 94043","20/02/2022","10:00","jiodsa joidas","John Doe"));
-        posts.add(new Post("sd6f54s6d5f4","science", "1 Infinite Loop, Cupertino, CA 95014","22/05/2022","19:30","jiodsa joidas","Jane Smith"));
-        posts.add(new Post("9sd8g89ggnjk","engeneering", "350 Rhode Island St, San Francisco, CA 94103","23/01/2024","07:05","jiodsa joidas","Bob Johnson"));
+        posts.add(new Post("6s5df46sd65f", "math", "1600 Amphitheatre Parkway, Mountain View, CA 94043", "John Doe"));
+        posts.add(new Post("sd6f54s6d5f4", "science", "1 Infinite Loop, Cupertino, CA 95014", "Jane Smith"));
+        posts.add(new Post("9sd8g89ggnjk", "engeneering", "350 Rhode Island St, San Francisco, CA 94103", "Bob Johnson"));
 
 
         recyclerView = findViewById(R.id.recycler_view);
