@@ -4,14 +4,17 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import android.widget.ImageView;
@@ -45,7 +48,7 @@ import java.util.Date;
 
 import models.Post;
 
-public class FormActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class FormActivity extends Fragment implements OnMapReadyCallback {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button calendarButton;
     Button timeButton;
@@ -62,22 +65,23 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
     LatLng mLatLng = new LatLng(0, 0);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form);
+
+        View view = inflater.inflate(R.layout.activity_form, container, false);
+//        setContentView(R.layout.activity_form);
 
         mAuth = FirebaseAuth.getInstance();
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.post_map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager ().findFragmentById(R.id.post_map);
         mapFragment.getMapAsync(this);
 
 
-        textViewToChange = (TextView) findViewById(R.id.show_selected_date);
+        textViewToChange = (TextView) view.findViewById(R.id.show_selected_date);
         textViewToChange.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
-        calendarButton = findViewById(R.id.pick_date_button);
-        timeButton = findViewById(R.id.pick_time_button);
-        form_submit = findViewById(R.id.form_submit);
+        calendarButton = view.findViewById(R.id.pick_date_button);
+        timeButton = view.findViewById(R.id.pick_time_button);
+        form_submit = view.findViewById(R.id.form_submit);
 
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +93,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
                         .setTitleText("Select Appointment time")
                         .build();
-                timePicker.show(getSupportFragmentManager(), "DayPicker");
+                timePicker.show(getFragmentManager (), "DayPicker");
                 timePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -97,7 +101,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                         int minutes = timePicker.getMinute();
                         String hs = "00";
                         String ms = "00";
-                        show_time_date = (TextView) findViewById(R.id.show_time_date);
+                        show_time_date = (TextView) view.findViewById(R.id.show_time_date);
                         if (hours < 10) {
                             hs = "0" + Integer.toString(hours);
                         } else {
@@ -121,11 +125,11 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 .setTitleText("Select date")
                                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                                 .build();
-                datePicker.show(getSupportFragmentManager(), "DayPicker");
+                datePicker.show(getFragmentManager (), "DayPicker");
                 datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        textViewToChange = (TextView) findViewById(R.id.show_selected_date);
+                        textViewToChange = (TextView) view.findViewById(R.id.show_selected_date);
                         textViewToChange.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date((Long) selection)));
                     }
                 });
@@ -135,10 +139,10 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         form_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subjectNameI = (TextInputLayout) findViewById(R.id.sn);
-                locationNameI = (TextInputLayout) findViewById(R.id.ln);
-                show_selected_date = (TextView) findViewById(R.id.show_selected_date);
-                show_time_date = (TextView) findViewById(R.id.show_time_date);
+                subjectNameI = (TextInputLayout) view.findViewById(R.id.sn);
+                locationNameI = (TextInputLayout) view.findViewById(R.id.ln);
+                show_selected_date = (TextView) view.findViewById(R.id.show_selected_date);
+                show_time_date = (TextView) view.findViewById(R.id.show_time_date);
                 String subjectName = String.valueOf(subjectNameI.getEditText().getText());
                 String locationName = String.valueOf(locationNameI.getEditText().getText());
                 String date = String.valueOf(show_selected_date.getText());
@@ -163,9 +167,14 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
                                                 //Navigate to home page
-                                                Intent loginIntent = new Intent(FormActivity.this, DashboardActivity.class);
-                                                startActivity(loginIntent);
-                                                finish();
+
+
+//                                                Intent loginIntent = new Intent(FormActivity.this, DashboardActivity.class);
+//                                                startActivity(loginIntent);
+//                                                finish();
+
+                                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsListFragment()).commit();
+
 
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
@@ -189,8 +198,8 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        ScrollView mainScrollView = (ScrollView) findViewById(R.id.main_scrollview);
-        ImageView transparentImageView = (ImageView) findViewById(R.id.transparent_image);
+        ScrollView mainScrollView = (ScrollView) view.findViewById(R.id.main_scrollview);
+        ImageView transparentImageView = (ImageView) view.findViewById(R.id.transparent_image);
 
         transparentImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -220,7 +229,7 @@ public class FormActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-    }
+        return view;}
 
 
     @Override

@@ -48,8 +48,11 @@ public class PostsListFragment extends Fragment {
         floating_action_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), FormActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), FormActivity.class);
+//                startActivity(intent);
+
+
+                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new FormActivity()).addToBackStack(null).commit();
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
