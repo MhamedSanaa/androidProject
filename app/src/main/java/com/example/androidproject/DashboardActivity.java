@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,27 +19,43 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DashboardActivity extends AppCompatActivity {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    MenuItem logout;
+    MenuItem logout,account;
+    TextView nav_header_textView_name,nav_header_textView_email;
+
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.naview);
         toolbar = findViewById(R.id.topAppBar);
 
+
         NavigationView navigationView = findViewById(R.id.naview);
         Menu menu = navigationView.getMenu();
+        nav_header_textView_name = navigationView.findViewById(R.id.nav_header_textView_name);
+        nav_header_textView_email = navigationView.findViewById(R.id.nav_header_textView_email);
         logout = menu.findItem(R.id.logout);
+        account = menu.findItem(R.id.account);
 
+        account.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                return true;
+            }
+        });
         logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
@@ -53,6 +71,8 @@ public class DashboardActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -62,6 +82,4 @@ public class DashboardActivity extends AppCompatActivity {
 //            navigationView.setCheckedItem(R.id.nav_home);
         }
     }
-
-
 }

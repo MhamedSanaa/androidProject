@@ -61,25 +61,41 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:backgroundTint="@color/bluebutton"
-        android:textColor="@color/white"
         android:text="Log in"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/login_btn_signup"
-        style="@style/Widget.Material3.Button.ElevatedButton"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Sign up"
-        android:textSize="20sp" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Forget password ?"
-        android:textAlignment="center"
-        android:textColor="#0096FF"
-        android:textColorHint="#B16767" />
+        <Button
+            android:id="@+id/login_btn_forgot_password"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Forgot password ?"
+            android:textColor="@color/bluebutton"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="34dp"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/login_btn_signup"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Sign up"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="34dp"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

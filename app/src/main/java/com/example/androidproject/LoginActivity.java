@@ -17,14 +17,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import models.User;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Button btn_signup, btn_login;
+    Button btn_signup, btn_login,login_btn_forgot_password;
     TextInputEditText email, password;
     private FirebaseAuth mAuth;
 
@@ -33,24 +29,18 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.login_password);
         btn_signup = findViewById(R.id.login_btn_signup);
         btn_login = findViewById(R.id.login_btn_login);
+        login_btn_forgot_password = findViewById(R.id.login_btn_forgot_password);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent loginIntent = new Intent(LoginActivity.this, DashboardActivity.class);
             startActivity(loginIntent);
             finish();
         }
-//        SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
-//        String UserId = sessionManagement.getSession();
-//        if (!UserId.equals("NaN")){
-//            Intent loginIntent = new Intent(LoginActivity.this, DashboardActivity.class);
-//            startActivity(loginIntent);
-//            finish();
-//        }
     }
 
     @Override
@@ -94,6 +84,18 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
+            }
+        });
+        login_btn_forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+}
+
 
 //                db.collection("users")
 //                        .whereEqualTo("email", semail)
@@ -125,7 +127,14 @@ public class LoginActivity extends AppCompatActivity {
 //                                        }
 //                                    }
 //                                });
-            }
-        });
-    }
-}
+
+
+
+
+//        SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
+//        String UserId = sessionManagement.getSession();
+//        if (!UserId.equals("NaN")){
+//            Intent loginIntent = new Intent(LoginActivity.this, DashboardActivity.class);
+//            startActivity(loginIntent);
+//            finish();
+//        }
