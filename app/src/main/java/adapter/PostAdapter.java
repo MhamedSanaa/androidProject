@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.List;
 
@@ -26,10 +27,10 @@ import models.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder>{
 
-    private List<Post> posts;
+    private List<QueryDocumentSnapshot> posts;
     private Context context;
 
-    public PostAdapter(Context context, List<Post> posts) {
+    public PostAdapter(Context context, List<QueryDocumentSnapshot> posts) {
         this.context = context;
         this.posts = posts;
     }
@@ -42,7 +43,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
-        Post post = posts.get(position);
+        QueryDocumentSnapshot queryDocumentSnapshot = posts.get(position);
+        Post post = queryDocumentSnapshot.toObject(Post.class);
         Log.d( "onBindViewHolder: ---------------",post.UserId);
         holder.userIdTextView.setText(post.UserId);
         holder.addressTextView.setText(post.address);

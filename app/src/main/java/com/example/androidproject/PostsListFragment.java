@@ -33,7 +33,7 @@ public class PostsListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
-    private List<Post> posts = new ArrayList<>();
+    private List<QueryDocumentSnapshot> posts = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -74,8 +74,7 @@ public class PostsListFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Post post = document.toObject(Post.class);
-                                posts.add(post);
+                                posts.add(document);
                                 Log.d("posts list fragement////////////////", document.getId() + " => " + document.getData());
                             }
                             postAdapter.notifyDataSetChanged();
