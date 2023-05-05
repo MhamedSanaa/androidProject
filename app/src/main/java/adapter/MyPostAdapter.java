@@ -32,7 +32,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
 
     private List<QueryDocumentSnapshot> posts;
     private Context context;
-    Button modifyButton;
+
 
     public MyPostAdapter(Context context, List<QueryDocumentSnapshot> posts) {
         this.context = context;
@@ -42,7 +42,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
     @Override
     public MyPostAdapter.MyPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_card_view, parent, false);
-        modifyButton=view.findViewById(R.id.post_card_modify);
+
         return new MyPostAdapter.MyPostViewHolder(view);
     }
 
@@ -52,8 +52,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
 
 //        String idOfPost=queryDocumentSnapshot.getId();
 
-
-        modifyButton.setOnClickListener(new View.OnClickListener() {
+holder.joinButton.setVisibility(View.GONE);
+        holder.modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 QueryDocumentSnapshot queryDocumentSnapshot = posts.get(position);
@@ -121,6 +121,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
         private TextView post_card_location;
 
         private MapView mapView;
+        private Button modifyButton;
+        private Button joinButton;
         private GoogleMap googleMap;
 
         public MyPostViewHolder(@NonNull View itemView) {
@@ -133,6 +135,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
             time = itemView.findViewById(R.id.post_card_time);
             numOfPart = itemView.findViewById(R.id.post_card_participation);
             post_card_location = itemView.findViewById(R.id.post_card_location);
+            modifyButton=itemView.findViewById(R.id.post_card_modify);
+            joinButton=itemView.findViewById(R.id.post_card_join);
 
             if (mapView != null) {
                 mapView.onCreate(null);

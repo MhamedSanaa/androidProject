@@ -48,7 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
         myposts.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyPostsListFragment()).commit();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyPostsListFragment()).addToBackStack(null).commit();
                 return true;
             }
         });
