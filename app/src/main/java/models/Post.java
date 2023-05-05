@@ -1,6 +1,6 @@
 package models;
 
-import org.checkerframework.common.returnsreceiver.qual.This;
+
 
 public class Post {
     public String UserId;
@@ -18,7 +18,7 @@ public class Post {
     public Post() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public Post(String UserId, String subject,String address, String date, String time,  double latitude,double longitude,int numberOfParticipants,String user) {
+    public Post(String UserId, String subject,String address, String date, String time,  double latitude,double longitude,String user) {
         this.UserId = UserId;
         this.subject = subject;
         this.latitude = latitude;
@@ -27,7 +27,7 @@ public class Post {
         this.date=date;
         this.time=time;
         this.user = user;
-        this.numberOfParticipants=numberOfParticipants;
+        this.numberOfParticipants=0;
     }
 
     public String toString(){

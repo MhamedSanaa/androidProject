@@ -73,6 +73,7 @@ public class PostsListFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            posts.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 posts.add(document);
                                 Log.d("posts list fragement////////////////", document.getId() + " => " + document.getData());

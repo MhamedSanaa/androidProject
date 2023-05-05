@@ -158,7 +158,7 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 //                                Log.d(TAG, "DocumentSnapshot data: " + document.getString("fullName") );
-                                Post newPost = new Post(userId, subjectName, locationName, date, time, location.latitude,location.longitude,0, document.getString("fullName") );
+                                Post newPost = new Post(userId, subjectName, locationName, date, time, location.latitude,location.longitude, document.getString("fullName") );
                                 db.collection("posts")
                                         .add(newPost)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
