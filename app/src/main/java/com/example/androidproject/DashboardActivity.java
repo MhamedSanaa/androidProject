@@ -23,7 +23,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    MenuItem logout,account;
+    MenuItem logout,account,myposts;
     TextView nav_header_textView_name,nav_header_textView_email;
 
     Toolbar toolbar;
@@ -43,6 +43,15 @@ public class DashboardActivity extends AppCompatActivity {
         nav_header_textView_email = navigationView.findViewById(R.id.nav_header_textView_email);
         logout = menu.findItem(R.id.logout);
         account = menu.findItem(R.id.account);
+        myposts = menu.findItem(R.id.myPosts);
+
+        myposts.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyPostsListFragment()).commit();
+                return true;
+            }
+        });
 
         account.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override

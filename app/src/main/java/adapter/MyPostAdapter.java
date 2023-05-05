@@ -2,14 +2,12 @@ package adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,41 +19,35 @@ import com.example.androidproject.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.List;
 
 import models.Post;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder>{
+public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostViewHolder>{
 
     private List<QueryDocumentSnapshot> posts;
     private Context context;
-    Button modifyButton,joinButton,deleteButton;
+    Button modifyButton;
 
-    public PostAdapter(Context context, List<QueryDocumentSnapshot> posts) {
+    public MyPostAdapter(Context context, List<QueryDocumentSnapshot> posts) {
         this.context = context;
         this.posts = posts;
     }
     @NonNull
     @Override
-    public PostAdapter.PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyPostAdapter.MyPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_card_view, parent, false);
         modifyButton=view.findViewById(R.id.post_card_modify);
-        joinButton=view.findViewById(R.id.post_card_join);
-        modifyButton=view.findViewById(R.id.post_card_modify);
-
-        return new PostViewHolder(view);
+        return new MyPostAdapter.MyPostViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull MyPostAdapter.MyPostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         QueryDocumentSnapshot queryDocumentSnapshot = posts.get(position);
 
 //        String idOfPost=queryDocumentSnapshot.getId();
@@ -119,8 +111,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public int getItemCount() {
         return posts.size();
     }
-    public static class PostViewHolder extends RecyclerView.ViewHolder {
-//        private TextView userIdTextView;
+    public static class MyPostViewHolder extends RecyclerView.ViewHolder {
+        //        private TextView userIdTextView;
         private TextView date;
         private TextView userTextView;
         private TextView subjectTextView;
@@ -131,7 +123,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private MapView mapView;
         private GoogleMap googleMap;
 
-        public PostViewHolder(@NonNull View itemView) {
+        public MyPostViewHolder(@NonNull View itemView) {
             super(itemView);
 //            userIdTextView = itemView.findViewById(R.id.userId);
             userTextView = itemView.findViewById(R.id.user);

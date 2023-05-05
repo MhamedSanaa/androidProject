@@ -8,6 +8,11 @@
             android:title="Home" />
 
         <item
+            android:id="@+id/myPosts"
+            android:icon="@drawable/calendar_icon"
+            android:title="My Posts" />
+
+        <item
             android:id="@+id/account"
             android:icon="@drawable/account_circle_icon"
             android:title="Account" />
@@ -16,6 +21,7 @@
             android:id="@+id/logout"
             android:icon="@drawable/logout_icon"
             android:title="Logout" />
+
 
     </group>
 
