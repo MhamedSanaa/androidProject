@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:padding="8dp"
-            android:text="Your Name"
+            android:text="Welcome back"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:padding="8dp"
-            android:text="your_email@example.com"
+            android:text="Feel free to study with us!"
             android:textColor="@color/white"
             android:textSize="14sp" />
 

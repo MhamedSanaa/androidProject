@@ -38,6 +38,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:endIconMode="password_toggle"
         android:padding="5dp"
         tools:ignore="MissingConstraints">
 
@@ -46,13 +47,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:hint="Password" />
+            android:inputType="textPassword"
+            android:hint="Password"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remember me" />
+<!--    <CheckBox-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Remember me" />-->
 
     <Button
         android:id="@+id/login_btn_login"

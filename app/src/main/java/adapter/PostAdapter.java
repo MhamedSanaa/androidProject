@@ -26,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -58,7 +59,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         QueryDocumentSnapshot queryDocumentSnapshot = posts.get(position);
 
-//        String idOfPost=queryDocumentSnapshot.getId();
+        String idOfPost=queryDocumentSnapshot.getString("UserId");
+//        Log.w("TAG+++++++++++++++++++++++++++++++++++++++++", idOfPost );
+//        Log.w("TAG-----------------------------------------",  FirebaseAuth.getInstance().getCurrentUser().getUid());
+        if(idOfPost.equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+        {
+            holder.joinButton.setVisibility(View.GONE);
+        }else{
+            holder.modifyButton.setVisibility(View.GONE);
+            holder.deleteButton.setVisibility(View.GONE);
+        }
 
 
         modifyButton.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +139,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private TextView post_card_location;
 
         private MapView mapView;
+
+
+        private Button modifyButton;
+        private Button joinButton;
+        private Button deleteButton;
         private GoogleMap googleMap;
 
         public PostViewHolder(@NonNull View itemView) {
@@ -141,7 +156,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             time = itemView.findViewById(R.id.post_card_time);
             numOfPart = itemView.findViewById(R.id.post_card_participation);
             post_card_location = itemView.findViewById(R.id.post_card_location);
-
+            modifyButton=itemView.findViewById(R.id.post_card_modify);
+            joinButton=itemView.findViewById(R.id.post_card_join);
+            deleteButton=itemView.findViewById(R.id.post_card_delete);
             if (mapView != null) {
                 mapView.onCreate(null);
                 mapView.onResume();
