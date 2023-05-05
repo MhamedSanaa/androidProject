@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,7 +31,9 @@ import models.Post;
 import models.User;
 
 public class PostsListFragment extends Fragment {
+    private String currentUserID;
 
+    private FirebaseAuth mAuth;
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<QueryDocumentSnapshot> posts = new ArrayList<>();
@@ -43,6 +46,10 @@ public class PostsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_posts_list, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        Log.d( "MyPostsList onCreateView: ",currentUserID);
         recyclerView = view.findViewById(R.id.posts_list_recycler_view);
         floating_action_button=view.findViewById(R.id.floating_action_button);
         floating_action_button.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +75,7 @@ public class PostsListFragment extends Fragment {
     }
     public void getPosts(){
         db.collection("posts")
+                .whereNotEqualTo("UserId",currentUserID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
