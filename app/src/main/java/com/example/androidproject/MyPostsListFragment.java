@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import adapter.MyPostAdapter;
 import adapter.PostAdapter;
 
 public class MyPostsListFragment extends Fragment {
@@ -34,7 +35,7 @@ public class MyPostsListFragment extends Fragment {
     private String currentUserID;
 
     private FirebaseAuth mAuth;
-    private PostAdapter postAdapter;
+    private MyPostAdapter myPostAdapter;
     private List<QueryDocumentSnapshot> posts = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -68,8 +69,8 @@ public class MyPostsListFragment extends Fragment {
 
 
         // Set adapter
-        postAdapter = new PostAdapter(getContext(),posts);
-        recyclerView.setAdapter(postAdapter);
+        myPostAdapter = new MyPostAdapter(getContext(),posts);
+        recyclerView.setAdapter(myPostAdapter);
         getMyPosts();
         // Inflate the layout for this fragment
         return view;
@@ -87,7 +88,7 @@ public class MyPostsListFragment extends Fragment {
                                 posts.add(document);
                                 Log.d("posts list fragement////////////////", document.getId() + " => " + document.getData());
                             }
-                            postAdapter.notifyDataSetChanged();
+                            myPostAdapter.notifyDataSetChanged();
                         } else {
                             Log.d("TAG", "Error getting documents: /////////////////////", task.getException());
                         }
