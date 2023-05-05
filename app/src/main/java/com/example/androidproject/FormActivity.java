@@ -4,10 +4,15 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -53,7 +58,6 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
     Button calendarButton;
     Button timeButton;
     Button form_submit;
-    TextView textViewToChange;
     TextView show_selected_date, show_time_date;
     TextInputLayout subjectNameI, locationNameI;
 
@@ -73,12 +77,15 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
 
         mAuth = FirebaseAuth.getInstance();
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager ().findFragmentById(R.id.post_map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.post_map);
         mapFragment.getMapAsync(this);
 
 
-        textViewToChange = (TextView) view.findViewById(R.id.show_selected_date);
-        textViewToChange.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        subjectNameI = view.findViewById(R.id.sn);
+        locationNameI = view.findViewById(R.id.ln);
+        show_selected_date = view.findViewById(R.id.show_selected_date);
+        show_time_date = view.findViewById(R.id.show_time_date);
+        show_selected_date.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         calendarButton = view.findViewById(R.id.pick_date_button);
         timeButton = view.findViewById(R.id.pick_time_button);
         form_submit = view.findViewById(R.id.form_submit);
@@ -93,7 +100,7 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
                         .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
                         .setTitleText("Select Appointment time")
                         .build();
-                timePicker.show(getFragmentManager (), "DayPicker");
+                timePicker.show(getFragmentManager(), "DayPicker");
                 timePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -101,7 +108,6 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
                         int minutes = timePicker.getMinute();
                         String hs = "00";
                         String ms = "00";
-                        show_time_date = (TextView) view.findViewById(R.id.show_time_date);
                         if (hours < 10) {
                             hs = "0" + Integer.toString(hours);
                         } else {
@@ -125,12 +131,11 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
                                 .setTitleText("Select date")
                                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                                 .build();
-                datePicker.show(getFragmentManager (), "DayPicker");
+                datePicker.show(getFragmentManager(), "DayPicker");
                 datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        textViewToChange = (TextView) view.findViewById(R.id.show_selected_date);
-                        textViewToChange.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date((Long) selection)));
+                        show_selected_date.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date((Long) selection)));
                     }
                 });
 
@@ -139,10 +144,6 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
         form_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subjectNameI = (TextInputLayout) view.findViewById(R.id.sn);
-                locationNameI = (TextInputLayout) view.findViewById(R.id.ln);
-                show_selected_date = (TextView) view.findViewById(R.id.show_selected_date);
-                show_time_date = (TextView) view.findViewById(R.id.show_time_date);
                 String subjectName = String.valueOf(subjectNameI.getEditText().getText());
                 String locationName = String.valueOf(locationNameI.getEditText().getText());
                 String date = String.valueOf(show_selected_date.getText());
@@ -158,13 +159,14 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 //                                Log.d(TAG, "DocumentSnapshot data: " + document.getString("fullName") );
-                                Post newPost = new Post(userId, subjectName, locationName, date, time, location.latitude,location.longitude, document.getString("fullName") );
+                                Post newPost = new Post(userId, subjectName, locationName, date, time, location.latitude, location.longitude, document.getString("fullName"));
                                 db.collection("posts")
                                         .add(newPost)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
                                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                sendNotification("New Posst","document"+documentReference.getId());
 
                                                 //Navigate to home page
 
@@ -191,7 +193,6 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
                         }
                     }
                 });
-
 
 
             }
@@ -229,7 +230,8 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
         });
 
 
-        return view;}
+        return view;
+    }
 
 
     @Override
@@ -251,5 +253,31 @@ public class FormActivity extends Fragment implements OnMapReadyCallback {
 
             }
         });
+    }
+
+    private void sendNotification(String title, String message) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "channel_id")
+                .setSmallIcon(R.drawable.baseline_notifications_none_24)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManager.notify(1, builder.build());
     }
 }
