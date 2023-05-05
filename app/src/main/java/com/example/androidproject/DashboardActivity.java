@@ -13,6 +13,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.ListFragment;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,10 +25,11 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    MenuItem logout,account,myposts;
+    MenuItem logout,account,myposts,navhome;
     TextView nav_header_textView_name,nav_header_textView_email;
 
     Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class DashboardActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.topAppBar);
 
 
+
         NavigationView navigationView = findViewById(R.id.naview);
         Menu menu = navigationView.getMenu();
         nav_header_textView_name = navigationView.findViewById(R.id.nav_header_textView_name);
@@ -45,12 +49,25 @@ public class DashboardActivity extends AppCompatActivity {
         logout = menu.findItem(R.id.logout);
         account = menu.findItem(R.id.account);
         myposts = menu.findItem(R.id.myPosts);
-
+        navhome = menu.findItem(R.id.nav_home);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         myposts.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
 
+
+                mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyPostsListFragment()).addToBackStack(null).commit();
+                return true;
+            }
+        });
+        navhome.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+
+                mDrawerLayout.closeDrawers();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsListFragment()).addToBackStack(null).commit();
                 return true;
             }
         });
@@ -58,6 +75,7 @@ public class DashboardActivity extends AppCompatActivity {
         account.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
+                mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
                 return true;
             }
@@ -65,6 +83,8 @@ public class DashboardActivity extends AppCompatActivity {
         logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                mDrawerLayout.closeDrawers();
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 SessionManagement sessionManagement = new SessionManagement(DashboardActivity.this);
