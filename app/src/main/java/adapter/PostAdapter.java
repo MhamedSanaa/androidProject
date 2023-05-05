@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidproject.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,14 +53,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.userTextView.setText(post.user);
         holder.subjectTextView.setText(post.subject);
 
-        holder.mapFragment.getMapAsync(new OnMapReadyCallback() {
+        holder.mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
-                // Set the address location on the map
+            public void onMapReady(GoogleMap map) {
+                holder.googleMap = map;
                 LatLng addressLocation = new LatLng(post.latitude, post.longitude);
-                googleMap.addMarker(new MarkerOptions().position(addressLocation).title("Marker"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(addressLocation, 15));
-                Log.d("lets see if other maps work-------------------------", googleMap.getCameraPosition().target.toString());
+                holder.googleMap.addMarker(new MarkerOptions().position(addressLocation).title("Marker"));
+                holder.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(addressLocation, 8));
             }
         });
     }
@@ -68,13 +69,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return posts.size();
     }
     public static class PostViewHolder extends RecyclerView.ViewHolder {
-
         private TextView userIdTextView;
         private TextView addressTextView;
         private TextView userTextView;
         private TextView subjectTextView;
-        private FrameLayout mapFrame;
-        private SupportMapFragment mapFragment;
+
+        private MapView mapView;
+        private GoogleMap googleMap;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,15 +83,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             userTextView = itemView.findViewById(R.id.user);
             subjectTextView = itemView.findViewById(R.id.subject);
             addressTextView = itemView.findViewById(R.id.address);
+            mapView = itemView.findViewById(R.id.map_view);
 
-            // Create a new instance of the Google Map fragment
-            mapFrame = itemView.findViewById(R.id.map_frame);
-
-            // Create a new instance of the Google Map fragment
-            mapFragment = new SupportMapFragment();
-
-            // Add the fragment to the FrameLayout using the FragmentManager
-            ((AppCompatActivity) itemView.getContext()).getSupportFragmentManager().beginTransaction().add(mapFrame.getId(), mapFragment).commit();
+            if (mapView != null) {
+                mapView.onCreate(null);
+                mapView.onResume();
+            }
         }
     }
 }
