@@ -62,6 +62,9 @@ public class MyPostsListFragment extends Fragment {
 
 
                 getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new FormActivity()).addToBackStack(null).commit();
+
+                DashboardActivity dashboardActivity = new DashboardActivity();
+                dashboardActivity.toolbar.setTitle("Add Post");
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

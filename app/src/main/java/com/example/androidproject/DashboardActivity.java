@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.ListFragment;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
     MenuItem logout, account, myposts, navhome, addnewpost;
     TextView nav_header_textView_name, nav_header_textView_email;
 
@@ -59,6 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyPostsListFragment()).addToBackStack(null).commit();
+                toolbar.setTitle("My Posts");
                 return true;
             }
         });
@@ -69,6 +72,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsListFragment()).addToBackStack(null).commit();
+                toolbar.setTitle("Home");
                 return true;
             }
         });
@@ -79,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FormActivity()).addToBackStack(null).commit();
+                toolbar.setTitle("Add Post");
                 return true;
             }
         });
@@ -88,6 +93,7 @@ public class DashboardActivity extends AppCompatActivity {
             public boolean onMenuItemClick(@NonNull MenuItem item) {
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
+                toolbar.setTitle("Account");
                 return true;
             }
         });
