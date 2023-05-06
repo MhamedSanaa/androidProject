@@ -61,7 +61,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyPostsListFragment()).addToBackStack(null).commit();
-                toolbar.setTitle("My Posts");
                 return true;
             }
         });
@@ -72,7 +71,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsListFragment()).addToBackStack(null).commit();
-                toolbar.setTitle("Home");
                 return true;
             }
         });
@@ -83,7 +81,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FormActivity()).addToBackStack(null).commit();
-                toolbar.setTitle("Add Post");
                 return true;
             }
         });
@@ -93,7 +90,6 @@ public class DashboardActivity extends AppCompatActivity {
             public boolean onMenuItemClick(@NonNull MenuItem item) {
                 mDrawerLayout.closeDrawers();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
-                toolbar.setTitle("Account");
                 return true;
             }
         });
@@ -123,7 +119,6 @@ public class DashboardActivity extends AppCompatActivity {
         toggle.syncState();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsListFragment()).commit();
-
             //navigationView.setCheckedItem(R.id.nav_home);
         }
     }
