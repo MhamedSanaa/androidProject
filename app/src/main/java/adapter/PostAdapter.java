@@ -64,6 +64,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         List<String> joinersIds = (List<String>) queryDocumentSnapshot.get("joinersIds");
         if(joinersIds!=null){
             numbOfPart = Integer.toString(joinersIds.size() + 1);
+
         }
 
 

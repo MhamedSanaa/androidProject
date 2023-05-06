@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Button btn_signup, btn_login,login_btn_forgot_password;
+    Button btn_signup, btn_login, login_btn_forgot_password;
     TextInputEditText email, password;
     private FirebaseAuth mAuth;
 
@@ -65,25 +65,29 @@ public class LoginActivity extends AppCompatActivity {
                 semail = String.valueOf(email.getText());
                 spassword = String.valueOf(password.getText());
                 Log.i("email", String.valueOf(semail));
-
-                mAuth.signInWithEmailAndPassword(semail, spassword)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Log.d("signInWithEmail:success", user.getUid());
-                                    Intent loginIntent = new Intent(LoginActivity.this, DashboardActivity.class);
-                                    startActivity(loginIntent);
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                if (semail.isEmpty() || spassword.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Please fill all the blanks ", Toast.LENGTH_LONG).show();
+                } else {
+                    mAuth.signInWithEmailAndPassword(semail, spassword)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        Log.d("signInWithEmail:success", user.getUid());
+                                        Intent loginIntent = new Intent(LoginActivity.this, DashboardActivity.class);
+                                        startActivity(loginIntent);
+                                        finish();
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("signInWithEmail:failure", task.getException());
+                                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
+
             }
         });
         login_btn_forgot_password.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +131,6 @@ public class LoginActivity extends AppCompatActivity {
 //                                        }
 //                                    }
 //                                });
-
-
 
 
 //        SessionManagement sessionManagement = new SessionManagement(LoginActivity.this);
