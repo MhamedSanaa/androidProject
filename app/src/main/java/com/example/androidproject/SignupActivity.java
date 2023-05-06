@@ -54,32 +54,37 @@ public class SignupActivity extends AppCompatActivity {
                 susername = String.valueOf(username.getText());
                 areFieldsEmpty(semail,susername,spassword,sconfirmpassword);
                 if (!isValidEmail(semail)){
-                    String message = "This is a multiline message.\n" +
-                            "enter valid email\n" +
-                            "and what does the email must contain ";
+                    String message =
+                            "enter valid email\n" ;
                     email.setError(message);
                     email.requestFocus();
                 }
                 else if (!isValidUsername(susername)){
-                    String message = "This is a multiline message.\n" +
-                            "enter valid username\n" +
-                            "and what does the username must contain ";
+                    String message =
+                            "enter valid username : \n"+"8 digit" ;
                     username.setError(message);
                     username.requestFocus();
                 }
                 else if (!isValidPwd(spassword)){
-                    String message = "This is a multiline message.\n" +
-                            "enter valid password\n" +
-                            "and what does the password must contain ";
+                    String message =
+                            "enter valid password : \n"+"1 lower, 1 upper, 8 digit" ;
                     password.setError(message);
                     password.requestFocus();
                 }
                 else if (!isPasswordMatch(spassword,sconfirmpassword)){
-                    String message = "passwords doesnt match";
+                    String message = "passwords doesn t match";
                     confirmpassword.setError(message);
                     confirmpassword.requestFocus();
                 }
-                else{
+                else
+                if(!isValidEmail(semail))
+                { Toast.makeText(SignupActivity.this, "email required", Toast.LENGTH_LONG).show();
+
+                }
+
+
+                else
+                {
                     mAuth.createUserWithEmailAndPassword(semail, spassword)
                             .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
