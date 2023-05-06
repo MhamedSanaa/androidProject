@@ -35,7 +35,7 @@ import java.util.List;
 
 import models.Post;
 
-public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostViewHolder>{
+public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostViewHolder> {
 
     private List<QueryDocumentSnapshot> posts;
     private Context context;
@@ -45,6 +45,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
         this.context = context;
         this.posts = posts;
     }
+
     @NonNull
     @Override
     public MyPostAdapter.MyPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,7 +63,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
 
             @Override
             public void onClick(View view) {
-                Log.w("TAG+++++++++++++++++++++++++++++++++++++++++++++++++++", "onClick: " );
+                Log.w("TAG+++++++++++++++++++++++++++++++++++++++++++++++++++", "onClick: ");
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Delete Produit ");
                 builder.setMessage("Are you sure for deleting this offer ?");
@@ -93,13 +94,13 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
                 builder.show();
             }
         });
-holder.joinButton.setVisibility(View.GONE);
+        holder.joinButton.setVisibility(View.GONE);
         holder.modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 QueryDocumentSnapshot queryDocumentSnapshot = posts.get(position);
                 String idOfPost = queryDocumentSnapshot.getId();
-                Post selectedPost=queryDocumentSnapshot.toObject(Post.class);
+                Post selectedPost = queryDocumentSnapshot.toObject(Post.class);
 
 
                 // Create a new instance of the ModifyFragment class
@@ -112,8 +113,8 @@ holder.joinButton.setVisibility(View.GONE);
                 bundle.putString("date", selectedPost.date);
                 bundle.putString("time", selectedPost.time);
                 bundle.putString("address", selectedPost.address);
-                bundle.putString("latitude",Double.toString( selectedPost.latitude));
-                bundle.putString("longitude",Double.toString( selectedPost.longitude));
+                bundle.putString("latitude", Double.toString(selectedPost.latitude));
+                bundle.putString("longitude", Double.toString(selectedPost.longitude));
 
                 // Set the arguments of the ModifyFragment object to the Bundle object
                 modifyFragment.setArguments(bundle);
@@ -128,7 +129,7 @@ holder.joinButton.setVisibility(View.GONE);
 
 
         Post post = queryDocumentSnapshot.toObject(Post.class);
-        Log.d( "onBindViewHolder: ---------------",post.UserId);
+        Log.d("onBindViewHolder: ---------------", post.UserId);
 //        holder.userIdTextView.setText(post.UserId);
         holder.date.setText(post.date);
         holder.userTextView.setText(post.user);
@@ -152,6 +153,7 @@ holder.joinButton.setVisibility(View.GONE);
     public int getItemCount() {
         return posts.size();
     }
+
     public static class MyPostViewHolder extends RecyclerView.ViewHolder {
         //        private TextView userIdTextView;
         private TextView date;
@@ -177,9 +179,9 @@ holder.joinButton.setVisibility(View.GONE);
             time = itemView.findViewById(R.id.post_card_time);
             numOfPart = itemView.findViewById(R.id.post_card_participation);
             post_card_location = itemView.findViewById(R.id.post_card_location);
-            modifyButton=itemView.findViewById(R.id.post_card_modify);
+            modifyButton = itemView.findViewById(R.id.post_card_modify);
             deleteButton = itemView.findViewById(R.id.post_card_delete);
-            joinButton=itemView.findViewById(R.id.post_card_join);
+            joinButton = itemView.findViewById(R.id.post_card_join);
 
             if (mapView != null) {
                 mapView.onCreate(null);
