@@ -21,12 +21,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DashboardActivity extends AppCompatActivity {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ;
     private FirebaseAuth mAuth;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    MenuItem logout,account,myposts,navhome;
-    TextView nav_header_textView_name,nav_header_textView_email;
+    MenuItem logout, account, myposts, navhome, addnewpost;
+    TextView nav_header_textView_name, nav_header_textView_email;
 
     Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
@@ -41,7 +42,6 @@ public class DashboardActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.topAppBar);
 
 
-
         NavigationView navigationView = findViewById(R.id.naview);
         Menu menu = navigationView.getMenu();
         nav_header_textView_name = navigationView.findViewById(R.id.nav_header_textView_name);
@@ -50,6 +50,7 @@ public class DashboardActivity extends AppCompatActivity {
         account = menu.findItem(R.id.account);
         myposts = menu.findItem(R.id.myPosts);
         navhome = menu.findItem(R.id.nav_home);
+        addnewpost = menu.findItem(R.id.create_new_post);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         myposts.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -71,6 +72,16 @@ public class DashboardActivity extends AppCompatActivity {
                 return true;
             }
         });
+        addnewpost.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+
+                mDrawerLayout.closeDrawers();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FormActivity()).addToBackStack(null).commit();
+                return true;
+            }
+        });
 
         account.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -88,9 +99,9 @@ public class DashboardActivity extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 SessionManagement sessionManagement = new SessionManagement(DashboardActivity.this);
-                Log.d( "onMenuItemClick: ",sessionManagement.getSession());
+                Log.d("onMenuItemClick: ", sessionManagement.getSession());
                 sessionManagement.removeSession();
-                Log.d( "onMenuItemClick: ",sessionManagement.getSession());
+                Log.d("onMenuItemClick: ", sessionManagement.getSession());
                 Intent loginIntent = new Intent(DashboardActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
                 finish();

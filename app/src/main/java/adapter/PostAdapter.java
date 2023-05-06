@@ -2,16 +2,22 @@ package adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidproject.PostsListFragment;
 import com.example.androidproject.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +25,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,6 +60,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         QueryDocumentSnapshot queryDocumentSnapshot = posts.get(position);
+        String numbOfPart="1";
+        List<String> joinersIds = (List<String>) queryDocumentSnapshot.get("joinersIds");
+        if(joinersIds!=null){
+            numbOfPart = Integer.toString(joinersIds.size() + 1);
+        }
+
 
         String idOfPost = queryDocumentSnapshot.getString("UserId");
         if (idOfPost.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
@@ -61,6 +74,47 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.modifyButton.setVisibility(View.GONE);
             holder.deleteButton.setVisibility(View.GONE);
         }
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Log.w("TAG+++++++++++++++++++++++++++++++++++++++++++++++++++", "onClick: " );
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Delete Produit ");
+                builder.setMessage("Are you sure for deleting this offer ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int position = holder.getAdapterPosition(); // get current position
+                        DocumentSnapshot document = posts.get(position); // get document at position
+                        String id = document.getId(); // get document ID
+                        FirebaseFirestore.getInstance().collection("posts").document(id).delete() // delete document from collection
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(context, "Post deleted successfully!", Toast.LENGTH_LONG).show();
+                                        posts.remove(position);
+                                        notifyDataSetChanged(); // notify adapter of data change
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "Failed to delete posts: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("No", null);
+                builder.show();
+            }
+        });
+//        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
         holder.joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +133,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                     db.collection("posts")
                                             .document(queryDocumentSnapshot.getId())
                                             .update("joinersIds", FieldValue.arrayUnion(mAuth.getCurrentUser().getUid()));
+                                    PostsListFragment fragment = new PostsListFragment();
+                                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.fragment_container, fragment);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+//                                    notifyDataSetChanged();
                                     Log.w("joining log", "user has joined");
                                 }
                             }
@@ -94,6 +154,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.time.setText(post.time);
         holder.numOfPart.setText(Integer.toString(post.numberOfParticipants));
         holder.post_card_location.setText(post.address);
+        holder.numOfPart.setText(numbOfPart);
 
         holder.mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
